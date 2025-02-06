@@ -6,11 +6,15 @@ const  userController = require('../Controllers/userController');
 router.post('/register' , [
     body('email').isEmail().withMessage('Invalid Email'),
     body('fullname.firstname').isLength({min : 3}).withMessage('Name must be at least 3 characters'),
-    body('passward').isLength({min:6}).withMessage('Password must be at least 6 characters'),
+    body('password').isLength({min:6}).withMessage('Password must be at least 6 characters'),
 ],
 userController.registerUser
 )
 
+router.post('/login',[
+ body('email').isEmail().withMessage('Invalid Email'),
+ body('password').isLength({min:6}).withMessage('Password must be at least 6 characters')
+],userController.loginUser)
 
 
 module.exports = router;

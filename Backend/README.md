@@ -1,4 +1,8 @@
-# User Registration Endpoint Documentation
+# API Documentation
+
+## Endpoints
+
+### POST /users/register
 
 ## Endpoint: `/users/register`
 
@@ -87,3 +91,39 @@ Example:
 ### Notes:
 - Ensure that the `passward` field is hashed before storing it in the database.
 - A JWT token is generated upon successful registration and returned in the response.
+
+### POST /users/login
+
+**Description:** User login.
+
+**Request Body:**
+- `email` (String): User's email.
+- `password` (String): User's password.
+
+**Responses:**
+
+- **Success:**
+  - **Status Code:** 200
+  - **Body:**
+    ```json
+    {
+      "token": "string",
+      "user": {
+        "id": "string",
+        "email": "string",
+        "fullname": {
+          "firstname": "string",
+          "lastname": "string"
+        }
+      }
+    }
+    ```
+
+- **Error:**
+  - **Status Code:** 400
+  - **Body:**
+    ```json
+    {
+      "message": "string"
+    }
+    ```

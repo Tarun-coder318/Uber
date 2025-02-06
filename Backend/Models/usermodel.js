@@ -19,7 +19,7 @@ email : {
     required: true,
     minlength : [5,'Email must be at least 5 characters'],
 },
-passward: {
+password: {
     type: String,
     required: true,
     select: false,
@@ -34,12 +34,12 @@ const token = jwt.sign({_id: this._id}, process.env.JWT_SECRET);
 return token;
 }
 
-userSchema.methods.comparepassward = async function (passward){
-    return await bcrypt.compare(passward, this.passward);
+userSchema.methods.comparepassword = async function (password){
+    return await bcrypt.compare(password, this.password);
 }
 
-userSchema.statics.hashPassward = async function(passward){
-    return await bcrypt.hash(passward, 10);
+userSchema.statics.hashPassword = async function(password){
+    return await bcrypt.hash(password, 10);
 }
 
 const userModel = mongoose.model('User', userSchema);
