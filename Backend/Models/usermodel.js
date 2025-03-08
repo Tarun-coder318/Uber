@@ -17,7 +17,9 @@ const userSchema = new mongoose.Schema({
 email : {
     type :String,
     required: true,
-    minlength : [5,'Email must be at least 5 characters'],
+    minlength : [5,'Email must be atleast 5 characters'],
+    unique: true,
+    lowercase: true,
 },
 password: {
     type: String,
@@ -30,11 +32,12 @@ soketId: {
 })
 
 userSchema.methods.generateAuthToken = function(){
-const token = jwt.sign({_id: this._id}, process.env.JWT_SECRET);
+const token = jwt.sign({_id: this._id}, process.env.JWT_SECRET, {expiresIn: '24h'});
 return token;
 }
 
-userSchema.methods.comparepassword = async function (password){
+
+userSchema.methods.comparePassword = async function (password){
     return await bcrypt.compare(password, this.password);
 }
 

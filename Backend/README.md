@@ -127,3 +127,62 @@ Example:
       "message": "string"
     }
     ```
+
+### GET /users/profile
+
+**Description:** Retrieve the profile of the authenticated user.
+
+**Headers:**
+- `Authorization` (String): Bearer token.
+
+**Responses:**
+
+- **Success:**
+  - **Status Code:** 200
+  - **Body:**
+    ```json
+    {
+      "_id": "user_id_here",
+      "fullname": {
+        "firstname": "John",
+        "lastname": "Doe"
+      },
+      "email": "john.doe@example.com"
+    }
+    ```
+
+- **Error:**
+  - **Status Code:** 401
+  - **Body:**
+    ```json
+    {
+      "message": "Unauthorized"
+    }
+    ```
+
+### GET /users/logout
+
+**Description:** Logout the authenticated user.
+
+**Headers:**
+- `Authorization` (String): Bearer token.
+
+**Responses:**
+
+- **Success:**
+  - **Status Code:** 200
+  - **Body:**
+    ```json
+    {
+      "message": "Logged out successfully"
+    }
+    ```
+
+- **Error:**
+  - **Status Code:** 401
+  - **Body:**
+    ```json
+    {
+      "message": "Unauthorized"
+    }
+    ```
