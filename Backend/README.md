@@ -186,3 +186,188 @@ Example:
       "message": "Unauthorized"
     }
     ```
+
+### POST /captains/register
+
+**Description:** Register a new captain.
+
+**Request Body:**
+```json
+{
+  "fullname": {
+    "firstname": "John", // Required, minimum 3 characters
+    "lastname": "Doe" // Optional, minimum 3 characters
+  },
+  "email": "john.doe@example.com", // Required, must be a valid email
+  "password": "password123", // Required, minimum 6 characters
+  "vehicle": {
+    "color": "Red", // Required, minimum 3 characters
+    "plateNumber": "ABC123" // Required, minimum 3 characters
+  }
+}
+```
+
+**Responses:**
+
+- **Success:**
+  - **Status Code:** 201
+  - **Body:**
+    ```json
+    {
+      "token": "jwt_token_here",
+      "captain": {
+        "_id": "captain_id_here",
+        "fullname": {
+          "firstname": "John",
+          "lastname": "Doe"
+        },
+        "email": "john.doe@example.com",
+        "vehicle": {
+          "color": "Red",
+          "plateNumber": "ABC123"
+        }
+      }
+    }
+    ```
+
+- **Validation Errors:**
+  - **Status Code:** 400
+  - **Body:**
+    ```json
+    {
+      "errors": [
+        {
+          "msg": "Invalid Email",
+          "param": "email",
+          "location": "body"
+        },
+        {
+          "msg": "Name must be at least 3 characters",
+          "param": "fullname.firstname",
+          "location": "body"
+        },
+        {
+          "msg": "Password must be at least 6 characters",
+          "param": "password",
+          "location": "body"
+        },
+        {
+          "msg": "Color must be at least 3 characters",
+          "param": "vehicle.color",
+          "location": "body"
+        },
+        {
+          "msg": "Plate Number must be at least 3 characters",
+          "param": "vehicle.plateNumber",
+          "location": "body"
+        }
+      ]
+    }
+    ```
+
+### POST /captains/login
+
+**Description:** Login a captain.
+
+**Request Body:**
+```json
+{
+  "email": "john.doe@example.com", // Required, must be a valid email
+  "password": "password123" // Required, minimum 6 characters
+}
+```
+
+**Responses:**
+
+- **Success:**
+  - **Status Code:** 200
+  - **Body:**
+    ```json
+    {
+      "token": "jwt_token_here",
+      "captain": {
+        "_id": "captain_id_here",
+        "fullname": {
+          "firstname": "John",
+          "lastname": "Doe"
+        },
+        "email": "john.doe@example.com",
+        "vehicle": {
+          "color": "Red",
+          "plateNumber": "ABC123"
+        }
+      }
+    }
+    ```
+
+- **Error:**
+  - **Status Code:** 400
+  - **Body:**
+    ```json
+    {
+      "message": "Invalid Email or Password"
+    }
+    ```
+
+### GET /captains/profile
+
+**Description:** Retrieve the profile of the authenticated captain.
+
+**Headers:**
+- `Authorization` (String): Bearer token.
+
+**Responses:**
+
+- **Success:**
+  - **Status Code:** 200
+  - **Body:**
+    ```json
+    {
+      "_id": "captain_id_here",
+      "fullname": {
+        "firstname": "John",
+        "lastname": "Doe"
+      },
+      "email": "john.doe@example.com",
+      "vehicle": {
+        "color": "Red",
+        "plateNumber": "ABC123"
+      }
+    }
+    ```
+
+- **Error:**
+  - **Status Code:** 401
+  - **Body:**
+    ```json
+    {
+      "message": "Unauthorized"
+    }
+    ```
+
+### GET /captains/logout
+
+**Description:** Logout the authenticated captain.
+
+**Headers:**
+- `Authorization` (String): Bearer token.
+
+**Responses:**
+
+- **Success:**
+  - **Status Code:** 200
+  - **Body:**
+    ```json
+    {
+      "message": "Logged out successfully"
+    }
+    ```
+
+- **Error:**
+  - **Status Code:** 401
+  - **Body:**
+    ```json
+    {
+      "message": "Unauthorized"
+    }
+    ```
