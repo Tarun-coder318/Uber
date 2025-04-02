@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {body} = require('express-validator');
+const {body, validationResult} = require('express-validator');
 const  captainController = require('../Controllers/captainController');
 const authMiddleware = require('../Middlewares/auth.middleware');
 
@@ -14,8 +14,13 @@ router.post('/register' , [
     // body('vehicleType').isIn(['car','motorcycle','auto']).withMessage('Invalid Vehicle Type'),
 
 ],
-captainController.registerCaptain
-)
+(req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+captainController.registerCaptain(req, res);
+});
 
 
 router.post('/login' , [
