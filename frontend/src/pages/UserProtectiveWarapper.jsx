@@ -37,26 +37,7 @@ const UserProtectiveWarapper = ({children}) => {
             fetchProfile();
         }
         , [token,navigate,setUser])
-    // useEffect(() => {
-    //     if(!token){
-    //         navigate("/login")
-    //     }
-    //     console.log(token);
-    //     axios.get(`${import.meta.env.VITE_BASE_URL}/users/profile`,{
-    //         headers:{
-    //             Authorization: `Bearer ${token}`
-    //         }
-    //     }).then((response) => {
-    //         if(response.status === 200){
-    //             const data = response.data
-    //             setUser(data)
-    //             setIsLoading(false)
-    //         }
-    //     }).catch((error) => {
-    //         console.log(error);
-    //         navigate("/login")
-    //     })
-    // }, [token, navigate, setUser])
+    
     if(isLoading){
         return (
             <div>
@@ -65,9 +46,7 @@ const UserProtectiveWarapper = ({children}) => {
         )
     }
    
-    // if(!token){
-    //     navigate("/login")
-    // }
+   
   return (
     <>
       {children}

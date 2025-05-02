@@ -26,7 +26,7 @@ password: {
     required: true,
     select: false,
 },
-soketId: {
+socketId: {
     type: String,
 },
 })

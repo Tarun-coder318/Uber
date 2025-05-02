@@ -1,15 +1,18 @@
+const mongoose = require("mongoose");
 
-const mongoose = require('mongoose');
+async function connectToDb() {
+  try {
+    await mongoose.connect(process.env.MONGO_URI, {
+      serverSelectionTimeoutMS: 30000,
+      bufferCommands: false,
+    });
 
-
-function connectToDb() {
-    mongoose.connect(process.env.MONGO_URI)
-    .then(()=>{
-   
-    console.log("Connected to DB:", mongoose.connection.db.databaseName);
-
-}).catch(err=> console.log(err));
+    mongoose.connection.once("open", () => {
+      console.log("✅ Connected to DB:", mongoose.connection.db.databaseName);
+    });
+  } catch (err) {
+    console.error("Error connecting to DB:", err);
+  }
 }
 
 module.exports = connectToDb;
-

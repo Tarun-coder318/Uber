@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { Link , useNavigate} from 'react-router-dom';
-import axios from 'axios';
-import { CaptainDataContext } from '../Context/CaptainDataContext';
-import { useContext } from 'react';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { CaptainDataContext } from "../Context/CaptainDataContext";
+import { useContext } from "react";
 // import { setDriver } from 'mongoose';
 
 const CaptainSignup = () => {
@@ -15,83 +15,62 @@ const CaptainSignup = () => {
   //  const [userData, setUserData] = useState([]);
 
   const { setCaptain } = useContext(CaptainDataContext);
-const navigate = useNavigate();
+  const navigate = useNavigate();
   const submitHandler = async (e) => {
     e.preventDefault();
     console.log("VITE_BASE_URL:", import.meta.env.VITE_BASE_URL);
     console.log("Submit button clicked!");
-  
+
     // setUserData((prevUserData) => [...prevUserData, {fullname:{Firstname,Lastname}, email, password }]);
-  const NewCaptain={
-    fullname:{
-      firstname: Firstname,
-      lastname: Lastname,
-    },
-    email,
-    password,
-    vehicle:{
-      color: vehicleColor,
-      plateNumber: vehiclePlateNumber
+    const NewCaptain = {
+      fullname: {
+        firstname: Firstname,
+        lastname: Lastname,
+      },
+      email,
+      password,
+      vehicle: {
+        color: vehicleColor,
+        plateNumber: vehiclePlateNumber,
+      },
+    };
+    console.log("NewCaptain Data:", NewCaptain);
+
+    try {
+      const apiUrl = `${import.meta.env.VITE_BASE_URL}/captains/register`;
+      console.log("Sending request to:", apiUrl);
+
+      const response = await axios.post(apiUrl, NewCaptain);
+
+      console.log("Response received:", response);
+
+      if (response.status === 201) {
+        const data = response.data;
+        setCaptain(data);
+        alert("Signup successful! Redirecting...");
+        localStorage.setItem("token", data.token);
+        navigate("/captain/home");
+
+        // Clear form fields
+        setFirstname("");
+        setLastname("");
+        setEmail("");
+        setPassword("");
+        setVehicleColor("");
+        setVehiclePlateNumber("");
+      }
+    } catch (error) {
+      console.error("Error during signup:", error);
+
+      if (error.response) {
+        console.error("Server responded with:", error.response.data);
+      } else if (error.request) {
+        console.error("No response received. Possible network issue.");
+      } else {
+        console.error("Axios request error:", error.message);
+      }
     }
-  }
-  console.log("NewCaptain Data:", NewCaptain);
-  
-  try {
-    const apiUrl = `${import.meta.env.VITE_BASE_URL}/captains/register`;
-    console.log("Sending request to:", apiUrl);
-
-    const response = await axios.post(apiUrl, NewCaptain);
-
-    console.log("Response received:", response);
-
-    if (response.status === 201) {
-      const data = response.data;
-      setCaptain(data);
-      alert("Signup successful! Redirecting...");
-      localStorage.setItem("token", data.token);
-      navigate("/captain/home");
-
-      // Clear form fields
-      setFirstname("");
-      setLastname("");
-      setEmail("");
-      setPassword("");
-      setVehicleColor("");
-      setVehiclePlateNumber("");
-    }
-  } catch (error) {
-    console.error("Error during signup:", error);
-
-    if (error.response) {
-      console.error("Server responded with:", error.response.data);
-    } else if (error.request) {
-      console.error("No response received. Possible network issue.");
-    } else {
-      console.error("Axios request error:", error.message);
-    }
-  }
-};
-  // const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/captains/register`, NewCaptain);
-  // if(response.status === 201){
-  //     const data = response.data
-  //     setCaptain(data)
-  //     alert("Signup successful! Redirecting...");
-  //     localStorage.setItem("token",data.token)
-  //     navigate("/Home");
-  // }
-
-  //   // console.log({userData});
-  //   setFirstname("");
-  //   setLastname("");
-  //   setEmail("");
-  //   setPassword("");
-  //   setVehicleColor("");
-  //   setVehiclePlateNumber("");
-  // };
-
-  // useEffect(() => {
-  //   console.log("Updated userData:", userData);
-  // }, [userData]);
+  };
 
   return (
     <div className="p-7  h-screen flex flex-col justify-between">
@@ -139,7 +118,7 @@ const navigate = useNavigate();
             type="password"
             placeholder="password"
           />
-           <h3 className="text-base font-medium mb-2">Vehcile</h3>
+          <h3 className="text-base font-medium mb-2">Vehcile</h3>
           <div className="flex gap-4 mb-5">
             <input
               required
@@ -158,8 +137,7 @@ const navigate = useNavigate();
               placeholder="Vehicle Plate Number"
             />
           </div>
-           
-          
+
           <button className="bg-[#111] text-white font-semibold mb-3 rounded px-4 py-2  w-full text-base placeholder:text-sm">
             Create Account As Captain
           </button>
@@ -182,4 +160,4 @@ const navigate = useNavigate();
   );
 };
 
-export default CaptainSignup
+export default CaptainSignup;

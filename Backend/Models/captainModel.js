@@ -26,7 +26,7 @@ password: {
     required: true,
     select: false,
 },
-soketId: {
+socketId:{
     type: String,
 },
 status: {
@@ -49,17 +49,20 @@ vehicle: {
 },
 
 location: {
-  lat: {
-        type: Number,
-        
+    type: {
+      type: String,
+      enum: ['Point']
     },
-    lng: {
-        type: Number,
-       
-    },
-},
-})
+    coordinates: {
+      type: [Number]
+    }
+  }
   
+  
+})
+captainSchema.index({ location: '2dsphere' }, { sparse: true });
+
+
 
 captainSchema.methods.generateAuthToken = function(){
 const token = jwt.sign({_id: this._id}, process.env.JWT_SECRET, {expiresIn: '24h'});

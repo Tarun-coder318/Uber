@@ -1,4 +1,4 @@
-import React, { useState,useContext } from "react";
+import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { UserDataContext } from "../Context/UserDatacontext";
@@ -7,41 +7,40 @@ const Usersingup = () => {
   const [password, setPassword] = useState("");
   const [Firstname, setFirstname] = useState("");
   const [Lastname, setLastname] = useState("");
-  // const [userData, setUserData] = useState([]);
 
   const navigate = useNavigate();
-const { setUser } = useContext(UserDataContext);
- 
+  const { setUser } = useContext(UserDataContext);
+
   const submitHandler = async (e) => {
     e.preventDefault();
-  
-   
+
     const NewUser = {
-      fullname: { 
+      fullname: {
         firstname: Firstname, // ✅ Lowercase key
-        lastname: Lastname    // ✅ Lowercase key
+        lastname: Lastname, // ✅ Lowercase key
       },
       email,
       password,
     };
-  
-    
-      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/users/register`, NewUser);
-  if(response.status === 201){
-      const data = response.data
-      setUser(data)
+
+    const response = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}/users/register`,
+      NewUser
+    );
+    if (response.status === 201) {
+      const data = response.data;
+      setUser(data);
       alert("Signup successful! Redirecting...");
-     localStorage.setItem("token",data.token)
-      navigate("/Home"); 
-  
-   
-    // Clear form fields
-    setFirstname("");
-    setLastname("");
-    setEmail("");
-    setPassword("");
+      localStorage.setItem("token", data.token);
+      navigate("/Home");
+
+      // Clear form fields
+      setFirstname("");
+      setLastname("");
+      setEmail("");
+      setPassword("");
+    }
   };
-}
 
   return (
     <div className="p-7  h-screen flex flex-col justify-between">

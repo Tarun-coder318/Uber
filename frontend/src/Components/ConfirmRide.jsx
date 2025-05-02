@@ -3,7 +3,16 @@ import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
-const ConfirmRide = ({ ConfirmRideOpen, setConfirmRideOpen, setLookingForDriverOpen }) => {
+const ConfirmRide = ({
+  ConfirmRideOpen,
+  setConfirmRideOpen,
+  setLookingForDriverOpen,
+  fare,
+  createRide,
+  pickupLocation,
+  dropLocation,
+  vehicleType,
+}) => {
   const confirmRideRef = useRef(null);
 
   useGSAP(() => {
@@ -38,41 +47,36 @@ const ConfirmRide = ({ ConfirmRideOpen, setConfirmRideOpen, setLookingForDriverO
         />
         <div className="w-full  mt-3">
           <div className="flex  items-center p-3 border-b-2 border-gray-400  gap-5">
-          <i class="ri-map-pin-line"></i>
+            <i class="ri-map-pin-line"></i>
             <div>
               <h3 className="text-lg font-medium">562/11-A</h3>
-              <p className="text-base -mt-1 text-gray-800">
-                Haldaur chowk,Bijnor 
-              </p>
+              <p className="text-base -mt-1 text-gray-800">{pickupLocation}</p>
             </div>
           </div>
           <div className="flex  items-center p-3 border-b-2 border-gray-400  gap-5">
-          <i className=" text-lg ri-map-pin-2-fill"></i>
+            <i className=" text-lg ri-map-pin-2-fill"></i>
             <div>
               <h3 className="text-lg font-medium">Third Wave Coffee</h3>
-              <p className="text-base -mt-1 text-gray-800">
-              17th Cross Rd, 5th Block, Koramangala
-              , Bengaluru, Karnataka 560034
-              </p>
+              <p className="text-base -mt-1 text-gray-800">{dropLocation}</p>
             </div>
-           
           </div>
           <div className="flex  items-center p-3  gap-5">
-          <i class=" text-lg ri-money-rupee-circle-line"></i>
+            <i class=" text-lg ri-money-rupee-circle-line"></i>
             <div>
-              <h3 className="text-lg ">190.30</h3>
-              <p className="text-base -mt-1 text-gray-800">
-                Cash Cash
-              </p>
+              <h3 className="text-lg ">{fare[vehicleType]}</h3>
+              <p className="text-base -mt-1 text-gray-800">Cash Cash</p>
             </div>
           </div>
         </div>
-        <button onClick={() => {
-          setLookingForDriverOpen(true);
-          setConfirmRideOpen(false);
-        }} 
-        
-          className=" w-full mt-3 bg-green-700 text-white font-semibold p-2 rounded-lg">
+        <button
+          onClick={() => {
+            setLookingForDriverOpen(true);
+            // setWaitingForDriverOpen(true);
+            setConfirmRideOpen(false);
+            createRide();
+          }}
+          className=" w-full mt-3 bg-green-700 text-white font-semibold p-2 rounded-lg"
+        >
           Confirm
         </button>
       </div>

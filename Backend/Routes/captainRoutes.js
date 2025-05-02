@@ -11,8 +11,7 @@ router.post('/register' , [
     body('password').isLength({min:6}).withMessage('Password must be at least 6 characters'),
     body('vehicle.color').isLength({min:3}).withMessage('Color must be at least 3 characters'),
     body('vehicle.plateNumber').isLength({min:3}).withMessage('Plate Number must be at least 3 characters'),
-    // body('vehicleType').isIn(['car','motorcycle','auto']).withMessage('Invalid Vehicle Type'),
-
+   
 ],
 (req, res) => {
     const errors = validationResult(req);
