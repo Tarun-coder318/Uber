@@ -7,20 +7,10 @@ const RidePopUp = ({
   rideOpenPanel,
   setRideOpenPanel,
   setisConfirmRidePopUp,
+  ride,
+  ConfirmRide,
 }) => {
-  //   const Ridepanel = useRef(null);
-
-  //   useGSAP(() => {
-  //     if (props.RideOpenPanel) {
-  //       gsap.to(Ridepanel.current, {
-  //         transform: "translateY(0)",
-  //       });
-  //     } else {
-  //       gsap.to(Ridepanel.current, {
-  //         transform: "translateY(100%)",
-  //       });
-  //     }
-  //   }, [props.rideOpenPanel]);
+ 
   const ridePanelRef = useRef(null);
   useGSAP(() => {
     // animate vertical slide
@@ -45,7 +35,7 @@ const RidePopUp = ({
             src="https://cdn.quotesgram.com/img/85/87/1731438144-BcogIEmIEAA3O5m.jpg"
             alt=""
           />
-          <h2>Harsh Patel</h2>
+          <h2 className="text-lg font-medium -mt-1 text-gray-800 capitalize" >{ride?.user.fullname.firstname + " " + ride?.user.fullname.lastname}</h2>
         </div>
         <h5>2.2 KM</h5>
       </div>
@@ -54,27 +44,26 @@ const RidePopUp = ({
         <div className="flex  items-center p-3 border-b-2 border-gray-400  gap-5">
           <i class="ri-map-pin-line"></i>
           <div>
-            <h3 className="text-lg font-medium">562/11-A</h3>
-            <p className="text-base -mt-1 text-gray-800">
-              Haldaur chowk,Bijnor
+            <h3 className="text-base font-medium">PickUp Location</h3>
+            <p className="text-lg font-medium -mt-1 text-gray-800">
+             {ride?.pickup}
             </p>
           </div>
         </div>
         <div className="flex  items-center p-3 border-b-2 border-gray-400  gap-5">
           <i className=" text-lg ri-map-pin-2-fill"></i>
           <div>
-            <h3 className="text-lg font-medium">Third Wave Coffee</h3>
-            <p className="text-base -mt-1 text-gray-800">
-              17th Cross Rd, 5th Block, Koramangala , Bengaluru, Karnataka
-              560034
+            <h3 className="text-base font-medium">Destination</h3>
+            <p className="text-lg font-medium -mt-1 text-gray-800">
+             { ride?.destination}
             </p>
           </div>
         </div>
         <div className="flex  items-center p-3  gap-5">
           <i class=" text-lg ri-money-rupee-circle-line"></i>
           <div>
-            <h3 className="text-lg font-semibold ">190.30</h3>
-            <p className="text-base -mt-1 text-gray-800">Cash Cash</p>
+            <h3 className="text-base font-semibold ">Payment</h3>
+            <p className="text-lg font-medium -mt-1 text-gray-800">{ride?.fare}</p>
           </div>
         </div>
       </div>
@@ -91,6 +80,9 @@ const RidePopUp = ({
         <button
           onClick={() => {
             setisConfirmRidePopUp(true);
+            ConfirmRide({ skipClose: true })
+            setisConfirmRidePopUp(true);
+            
           }}
           className="   bg-green-700 text-white font-semibold p-3 px-8 rounded-lg"
         >

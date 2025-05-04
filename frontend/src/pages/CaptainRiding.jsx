@@ -1,9 +1,12 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link ,useLocation} from "react-router-dom";
 import FinishRide from "../Components/FinishRide";
+import LiveTracking from "../Components/LiveTracking";
 
 const CaptainRiding = () => {
   const [finishRideOpen, setfinsihRideOpen] = useState(false);
+  const location = useLocation();
+  const rideData = location.state.ride;
   return (
     <div className="h-screen relative">
       <div className="fixed top-0 right-1  flex items-center justify-between ">
@@ -20,11 +23,7 @@ const CaptainRiding = () => {
         </Link>
       </div>
       <div className="h-4/5">
-        <img
-          className="h-full w-full object-cover "
-          src="https://www.hanbit.co.kr/data/editor/20210429161116_qvzgnfvw.gif"
-          alt=""
-        />
+       <LiveTracking/>
       </div>
       <div className="h-1/5  p-6 flex items-center justify-between relative bg-yellow-400">
         <h5
@@ -42,8 +41,9 @@ const CaptainRiding = () => {
       </div>
       <div>
         <FinishRide
-          finishRideOpen={finishRideOpen}
+         finishRideOpen={finishRideOpen}
           setfinsihRideOpen={setfinsihRideOpen}
+          ride={rideData}
         />
       </div>
     </div>

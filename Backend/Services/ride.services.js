@@ -1,6 +1,8 @@
 const rideModel = require("../Models/ride.model");
 const mapsService = require("./maps.services");
 const crypto = require("crypto");
+const { sendMessageToSocketID } = require("../socket");
+
 
 function getOtp(num) {
   function generateOTP(num) {
@@ -91,3 +93,87 @@ module.exports.createRide = async ({
 
   return ride.save(); // Don’t forget to save it!
 };
+module.exports.confirmRide = async ({rideId, captainId}) => {
+  if (!rideId || !captainId) {
+    throw new Error("Ride ID and Captain ID are required");
+
+  }
+  await rideModel.findOneAndUpdate(
+    { _id: rideId },
+    { status: "accepted", captain: captainId },
+    
+  );
+  const ride = await rideModel.findOne({ _id: rideId }).populate("user").populate("captain").select("+otp");
+  if (!ride) {
+    throw new Error("Ride not found");
+  }
+
+ 
+
+ 
+
+  return ride;
+}
+
+module.exports.startRide = async ({ rideId, otp, captainId }) => {
+  if (!rideId || !otp || !captainId) {
+    throw new Error("Ride ID, OTP, and Captain ID are required");
+  }
+
+  const ride = await rideModel.findById(rideId).populate("user").populate("captain").select("+otp");
+
+  if (!ride) {
+    throw new Error("Ride not found");
+  }
+
+  console.log("Stored OTP:", ride.otp);
+  console.log("Provided OTP:", otp);
+
+  if (ride.otp !== otp) {
+    throw new Error("Invalid OTP");
+  }
+
+  if (ride.status !== "accepted") {
+    throw new Error("Ride is not in accepted status");
+  }
+
+  await rideModel.findByIdAndUpdate(rideId, { status: "started", otp: "" });
+
+  sendMessageToSocketID(ride.user.socketId, {
+    event: "ride-started",
+    data: ride,
+  });
+
+  return ride;
+};
+
+module.exports.endRide = async ({ rideId, captain }) => {
+  if (!rideId ) {
+    throw new Error("Ride ID and  ID are required");
+  }
+
+  const ride = await rideModel.findById(rideId).populate("user").populate("captain").select("+otp");
+
+  if (!ride) {
+    throw new Error("Ride not found");
+  }
+
+  console.log("🚕 Ride Status:", ride.status);
+  console.log("👨‍✈️ Captain ID (request):", captain?._id);
+  console.log("👨‍✈️ Captain ID (ride):", ride.captain?._id);
+
+  if (ride.status !== "started") {
+    throw new Error("Ride is not in started status");
+  }
+
+  await rideModel.findOneAndUpdate({ _id: rideId }, { status: 'completed' });
+
+
+  sendMessageToSocketID(ride.user.socketId, {
+    event: "ride-completed",
+    data: ride,
+  });
+
+  return ride;
+};
+

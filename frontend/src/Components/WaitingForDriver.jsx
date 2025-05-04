@@ -35,9 +35,10 @@ const WaitingForDriver = (props) => {
           alt=""
         />
         <div className="text-right">
-          <h2 className="text-lg font-medium">Tarun</h2>
-          <h4 className="text-lg font-semibold -mt-1 -mb-1">UP 20 HL 123</h4>
+          <h2 className="text-lg font-medium capitalize">{props.ride?.captain?.fullname?.firstname + " " + props.ride?.captain?.fullname?.lastname}</h2>
+          <h4 className="text-lg font-semibold -mt-1 -mb-1 capitalize">{props.ride?.captain?.vehicle?.plateNumber }</h4>
           <p className="text-sm text-gray-600">Maruti Suziki Alto</p>
+          <h3 className="text-base font-medium  text-gray-800">{props.ride.otp}</h3>
         </div>
       </div>
 
@@ -46,27 +47,26 @@ const WaitingForDriver = (props) => {
           <div className="flex  items-center p-3 border-b-2 border-gray-400  gap-5">
             <i class="ri-map-pin-line"></i>
             <div>
-              <h3 className="text-lg font-medium">562/11-A</h3>
-              <p className="text-base -mt-1 text-gray-800">
-                Haldaur chowk,Bijnor
+              <h3 className="text-base font-medium  text-gray-800">PickUp Location</h3>
+              <p className="text-lg font-medium -mt-1 ">
+               {props.ride?.pickup}
               </p>
             </div>
           </div>
           <div className="flex  items-center p-3 border-b-2 border-gray-400  gap-5">
             <i className=" text-lg ri-map-pin-2-fill"></i>
             <div>
-              <h3 className="text-lg font-medium">Third Wave Coffee</h3>
-              <p className="text-base -mt-1 text-gray-800">
-                17th Cross Rd, 5th Block, Koramangala , Bengaluru, Karnataka
-                560034
+              <h3 className="text-base font-medium  text-gray-800">Destination</h3>
+              <p className="text-lg font-medium -mt-1">
+                {props.ride?.destination}
               </p>
             </div>
           </div>
           <div className="flex  items-center p-3  gap-5">
             <i class=" text-lg ri-money-rupee-circle-line"></i>
             <div>
-              <h3 className="text-lg ">190.30</h3>
-              <p className="text-base -mt-1 text-gray-800">Cash Cash</p>
+              <h3 className="text-base font-medium  text-gray-800">Payment</h3>
+              <p className="text-lg font font-medium -mt-1">{props.ride?.fare}</p>
             </div>
           </div>
         </div>

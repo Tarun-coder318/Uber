@@ -9,8 +9,10 @@ import ConfirmRide from "../Components/ConfirmRide";
 import LookingForDriver from "../Components/LookingForDriver";
 import WaitingForDriver from "../Components/WaitingForDriver";
 import { SocketDataContext } from "../Context/SocketDataContext";
+import { useNavigate } from "react-router-dom";
 
 import { UserDataContext } from "../Context/UserDatacontext";
+import LiveTracking from "../Components/LiveTracking";
 const Home = () => {
   const [pickupLocation, setPickupLocation] = useState("");
   const [dropLocation, setDropLocation] = useState("");
@@ -29,11 +31,27 @@ const Home = () => {
   const [vehicleType, setVehicleType] = useState("null");
   const { socket } = useContext(SocketDataContext);
   const { user } = useContext(UserDataContext);
+  const [ride , setRide] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     socket.emit("join", { userType: "user", userId: user._id });
   });
+  socket.on("ride-confirmed", (data) => {
+    
+  
+    console.log("Ride confirmed:", data);
+   
+    setLookingForDriverOpen(false);
+    setWaitingForDriverOpen(true);
+    setRide(data);
+  });
+  socket.on("ride-started", (ride) => {
+    console.log("Ride started:", ride);
+    setWaitingForDriverOpen(false);
+    navigate("/riding", { state: { ride} });
 
+  });
   const handlePickupChange = async (e) => {
     setPickupLocation(e.target.value);
     try {
@@ -168,14 +186,12 @@ const Home = () => {
       />
       <div className="h-screen w-screen">
         {/* image for temproary home page */}
-        <img
-          className="h-full w-full object-cover "
-          src="https://www.hanbit.co.kr/data/editor/20210429161116_qvzgnfvw.gif"
-          alt=""
-        />
+       <LiveTracking/>
       </div>
-      <div className=" flex flex-col justify-end h-screen absolute top-0  w-full ">
-        <div className="h-[30%] p-5 bg-white relative">
+      <div className=" flex flex-col justify-end h-screen absolute top-0  w-full pointer-events-none ">
+
+     
+         <div className="h-[40%] p-5 bg-white relative pointer-events-auto">
           <h5
             ref={panelCloseRef}
             onClick={() => {
@@ -265,6 +281,7 @@ const Home = () => {
           dropLocation={dropLocation}
           fare={fare}
           vehicleType={vehicleType}
+          
         />
       )}
       {lookingForDriverOpen && (
@@ -282,6 +299,7 @@ const Home = () => {
         <WaitingForDriver
           WaitingForDriverOpen={WaitingForDriverOpen}
           setWaitingForDriverOpen={setWaitingForDriverOpen}
+          ride={ride}
         />
       )}
     </div>

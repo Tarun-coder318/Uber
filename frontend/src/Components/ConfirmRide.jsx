@@ -4,6 +4,7 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
 const ConfirmRide = ({
+  // setWaitingForDriverOpen,
   ConfirmRideOpen,
   setConfirmRideOpen,
   setLookingForDriverOpen,
@@ -49,22 +50,22 @@ const ConfirmRide = ({
           <div className="flex  items-center p-3 border-b-2 border-gray-400  gap-5">
             <i class="ri-map-pin-line"></i>
             <div>
-              <h3 className="text-lg font-medium">562/11-A</h3>
+              <h3 className="text-lg font-medium">Pickup Location</h3>
               <p className="text-base -mt-1 text-gray-800">{pickupLocation}</p>
             </div>
           </div>
           <div className="flex  items-center p-3 border-b-2 border-gray-400  gap-5">
             <i className=" text-lg ri-map-pin-2-fill"></i>
             <div>
-              <h3 className="text-lg font-medium">Third Wave Coffee</h3>
+              <h3 className="text-lg font-medium">Destination</h3>
               <p className="text-base -mt-1 text-gray-800">{dropLocation}</p>
             </div>
           </div>
           <div className="flex  items-center p-3  gap-5">
             <i class=" text-lg ri-money-rupee-circle-line"></i>
             <div>
-              <h3 className="text-lg ">{fare[vehicleType]}</h3>
-              <p className="text-base -mt-1 text-gray-800">Cash Cash</p>
+              <h3 className="text-lg ">Payment</h3>
+              <p className="text-base -mt-1 text-gray-800">{fare[vehicleType]}</p>
             </div>
           </div>
         </div>

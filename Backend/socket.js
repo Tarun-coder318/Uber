@@ -17,6 +17,20 @@ async function initializeSocket(server) {
 
   io.on("connection", (socket) => {
     console.log(` Socket connected: ${socket.id}`);
+    socket.on("join", async ({ userId, userType }) => {
+      try {
+        if (userType === "captain") {
+          await captainModel.findByIdAndUpdate(userId, { socketId: socket.id });
+          console.log(`🧭 Captain ${userId} joined with socket ${socket.id}`);
+        } else if (userType === "user") {
+          await userModel.findByIdAndUpdate(userId, { socketId: socket.id });
+          console.log(`👤 User ${userId} joined with socket ${socket.id}`);
+        }
+      } catch (error) {
+        console.error("❌ Failed to update socket ID:", error);
+      }
+    });
+
 
     socket.on("update-location-captains", async (data) => {
       const { userId, location } = data;
@@ -50,9 +64,10 @@ async function initializeSocket(server) {
   });
 }
 
-function sendMessageToSocketID(socketID, event, message) {
+function sendMessageToSocketID(socketID,messageObject) {
+  console.log(`Sending message to ${socketID}`,messageObject)
   if (io) {
-    io.to(socketID).emit(event, message);
+    io.to(socketID).emit(messageObject.event, messageObject.data);
   } else {
     console.error("Socket.io is not initialized. Call initializeSocket first.");
   }
