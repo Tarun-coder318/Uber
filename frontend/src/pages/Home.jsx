@@ -178,7 +178,7 @@ const Home = () => {
     <div className="h-screen relative overflow-hidden">
       <img
         className="w-16 absolute left-5 top-5"
-        src="https://logospng.org/download/uber/logo-uber-4096.png"
+        src="https://cdn-icons-png.flaticon.com/512/89/89131.png"
         alt="Home"
       />
       <div className="h-screen w-screen">

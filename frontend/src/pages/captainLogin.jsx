@@ -43,7 +43,7 @@ const CaptainLogin = () => {
       <div>
         <img
           className="w-30 ml-10"
-          src="https://th.bing.com/th/id/R.eadac11b662faa57e4b806263f8e7642?rik=dXbhLg7x49QVbg&riu=http%3a%2f%2fpluspng.com%2fimg-png%2fuber-logo-vector-png-uber-icon-png-50-px-1600.png&ehk=hWY6TYYwZAYpPbHKLid%2f431JJx%2frKI7tiY%2b6i993Y1A%3d&risl=&pid=ImgRaw&r=0"
+          src="https://cdn-icons-png.flaticon.com/512/89/89131.png"
           alt=""
         />
         <form onSubmit={(e) => submitHandler(e)}>

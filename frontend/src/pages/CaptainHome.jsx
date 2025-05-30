@@ -87,7 +87,7 @@ const CaptainHome = () => {
       <div className="fixed top-0 right-1  flex items-center justify-between ">
         <img
           className="w-16"
-          src="https://logospng.org/download/uber/logo-uber-4096.png"
+          src="https://cdn-icons-png.flaticon.com/512/89/89131.png"
           alt=""
         />
         <Link

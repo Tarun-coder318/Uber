@@ -116,7 +116,7 @@ module.exports.getCaptainsInRadius = async (lat, lng, radius) => {
             type: "Point",
             coordinates: [lng, lat],
           },
-          $maxDistance: radius * 5000, // radius in meters
+          $maxDistance: radius * 50000, // radius in meters
         },
       },
     });

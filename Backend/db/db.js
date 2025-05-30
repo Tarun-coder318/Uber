@@ -12,6 +12,7 @@ async function connectToDb() {
     });
   } catch (err) {
     console.error("Error connecting to DB:", err);
+     throw err;
   }
 }
 

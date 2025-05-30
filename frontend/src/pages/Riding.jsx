@@ -32,7 +32,7 @@ const Riding = () => {
         <div className="flex items-center  justify-between">
           <img
             className="h-15"
-            src="https://www.pngplay.com/wp-content/uploads/8/Uber-PNG-Photos.png"
+            src="https://cdn-icons-png.flaticon.com/512/89/89131.png"
             alt=""
           />
           <div className="text-right">
