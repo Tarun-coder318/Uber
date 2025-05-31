@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import CaptainsDetails from "../Components/CaptainsDetails";
-import RidePopUp from "../Components/RidePopUp.JSX";
+import RidePopUp from "../Components/RidePopUp.jsx";
 import ConfirmRidePopUp from "../Components/ConfirmRidePopUp";
 import { useContext, useEffect } from "react";
 import { CaptainDataContext } from "../Context/CaptainDataContext";
