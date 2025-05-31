@@ -1,4 +1,6 @@
 import React from 'react'
+
+import './index.css'
 import Start from './pages/Start'
 import Home from './pages/Home'
 import UserLogin from './pages/userlogin'
